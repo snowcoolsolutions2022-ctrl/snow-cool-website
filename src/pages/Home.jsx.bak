@@ -1,0 +1,102 @@
+import React from 'react';
+import Hero from '../components/Hero';
+// import Services from '../components/Services'; // Maybe keep or refactor? The ref site has a "Services" blocks.
+import About from '../components/About';
+import Contact from '../components/Contact';
+import { content } from '../data/content';
+import { CheckCircle, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+const Home = () => {
+    return (
+        <>
+            <Hero />
+
+            {/* Services Links Grid (like reference site) */}
+            <section className="py-5">
+                <div className="container">
+                    <div className="row g-4">
+                        {content.services.slice(0, 3).map((service, index) => (
+                            <div key={index} className="col-md-4">
+                                <div className="p-4 border rounded hover-shadow h-100">
+                                    <h3 className="h5 fw-bold mb-3">{service.title}</h3>
+                                    <p className="text-muted mb-4">{service.description}</p>
+                                    <Link to={`/services/${service.id}`} className="text-primary fw-medium text-decoration-none">
+                                        Read More <ArrowRight size={16} />
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Pricing Section (Reference Site @Rs250 etc) */}
+            <section className="py-5 bg-light">
+                <div className="container">
+                    <div className="row g-4">
+                        {content.home.pricing.map((plan, index) => (
+                            <div key={index} className="col-md-4">
+                                <div className="card h-100 border-0 shadow-sm">
+                                    <div className="card-body p-4 text-center">
+                                        <h3 className="display-4 fw-bold text-primary mb-0">{plan.price}</h3>
+                                        <div className="text-muted mb-3">Starting at</div>
+                                        <h4 className="h5 fw-bold mb-3">{plan.title}</h4>
+                                        <p className="text-muted mb-4">{plan.desc}</p>
+                                        <Link to="/contact" className="btn btn-outline-primary">Book Now</Link>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Who We Are */}
+            <section className="py-5">
+                <div className="container">
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 mb-4 mb-lg-0">
+                            <h2 className="display-5 fw-bold mb-4">{content.home.whoWeAre.title}</h2>
+                            <p className="lead text-muted mb-4" style={{ whiteSpace: 'pre-line' }}>{content.home.whoWeAre.content}</p>
+                            <Link to="/about" className="btn btn-primary btn-lg">Read More</Link>
+                        </div>
+                        <div className="col-lg-6">
+                            {/* Placeholder image or existing About component logic */}
+                            <div className="bg-light rounded p-5 text-center">
+                                <h3 className="fw-bold text-muted">25+ Years Experience</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Why Choose Us */}
+            <section className="py-5 bg-dark text-white">
+                <div className="container">
+                    <div className="text-center mb-5">
+                        <h2 className="fw-bold">{content.home.whyChooseUs.title}</h2>
+                        <p className="lead text-white-50 mx-auto" style={{ maxWidth: '700px' }}>{content.home.whyChooseUs.desc}</p>
+                    </div>
+                    <div className="row g-4">
+                        {content.home.whyChooseUs.features.map((feature, index) => (
+                            <div key={index} className="col-md-4">
+                                <div className="text-center">
+                                    <div className="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4" style={{ width: '64px', height: '64px' }}>
+                                        <CheckCircle className="text-white" size={32} />
+                                    </div>
+                                    <h4 className="h5 fw-bold mb-3">{feature.title}</h4>
+                                    <p className="text-white-50">{feature.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <Contact />
+        </>
+    );
+};
+
+export default Home;

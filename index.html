@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>snow-cool-website</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            },
+            secondary: '#64748b',
+            accent: '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Visual Error Logger -->
+  <div id="visual-console">
+  </div>
+  <script>
+    window.onerror = function (message, source, lineno, colno, error) {
+      var el = document.getElementById('visual-console');
+      el.style.display = 'block';
+      el.innerText += "Error: " + message + "\nAt: " + source + ":" + lineno + ":" + colno + "\n\n";
+    };
+    window.onunhandledrejection = function (event) {
+      var el = document.getElementById('visual-console');
+      el.style.display = 'block';
+      el.innerText += "Promise Rejection: " + event.reason + "\n\n";
+    };
+  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
