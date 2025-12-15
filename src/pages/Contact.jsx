@@ -54,39 +54,7 @@ const Contact = () => {
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
                             <h2 className="text-2xl font-bold mb-8">Send us a Message</h2>
-                            <form className="space-y-6">
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Your Name</label>
-                                        <input type="text" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition" placeholder="John Doe" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
-                                        <input type="tel" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition" placeholder="+91 98765 43210" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                                    <input type="email" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition" placeholder="john@example.com" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-2">Service Required</label>
-                                    <select className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition">
-                                        <option>General Service</option>
-                                        <option>Repair / Breakdown</option>
-                                        <option>Installation</option>
-                                        <option>AMC Inquiry</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-2">Message</label>
-                                    <textarea className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition h-32" placeholder="Tell us about your requirements..."></textarea>
-                                </div>
-                                <button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2">
-                                    <Send size={18} /> Send Message
-                                </button>
-                            </form>
+                            <ContactForm />
                         </div>
                     </div>
                 </div>
@@ -94,5 +62,140 @@ const Contact = () => {
         </div>
     );
 };
+
+const ContactForm = () => {
+    const [formData, setFormData] = React.useState({
+        name: '',
+        phone: '',
+        email: '',
+        service: 'General Service',
+        message: ''
+    });
+    const [status, setStatus] = React.useState('idle'); // idle, loading, success, error
+    const [errorMsg, setErrorMsg] = React.useState('');
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setStatus('loading');
+        setErrorMsg('');
+
+        try {
+            // Import dynamically to avoid top-level issues if env vars are missing during build/dev
+            const { supabase } = await import('../lib/supabaseClient');
+
+            const { error } = await supabase
+                .from('messages')
+                .insert([
+                    {
+                        name: formData.name,
+                        phone: formData.phone,
+                        email: formData.email,
+                        service_type: formData.service,
+                        message: formData.message
+                    }
+                ]);
+
+            if (error) throw error;
+
+            setStatus('success');
+            setFormData({ name: '', phone: '', email: '', service: 'General Service', message: '' });
+        } catch (err) {
+            console.error('Error submitting form:', err);
+            setStatus('error');
+            setErrorMsg('Failed to send message. Please try again or call us directly.');
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-6">
+            {status === 'success' && (
+                <div className="bg-green-100 text-green-700 p-4 rounded-lg">
+                    Message sent successfully! We will get back to you shortly.
+                </div>
+            )}
+            {status === 'error' && (
+                <div className="bg-red-100 text-red-700 p-4 rounded-lg">
+                    {errorMsg}
+                </div>
+            )}
+
+            <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Your Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition"
+                        placeholder="John Doe"
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Phone Number</label>
+                    <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition"
+                        placeholder="+91 98765 43210"
+                    />
+                </div>
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition"
+                    placeholder="john@example.com"
+                />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Service Required</label>
+                <select
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition"
+                >
+                    <option value="General Service">General Service</option>
+                    <option value="Repair / Breakdown">Repair / Breakdown</option>
+                    <option value="Installation">Installation</option>
+                    <option value="AMC Inquiry">AMC Inquiry</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                <textarea
+                    name="message"
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition h-32"
+                    placeholder="Tell us about your requirements..."
+                ></textarea>
+            </div>
+            <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+                {status === 'loading' ? 'Sending...' : (<><Send size={18} /> Send Message</>)}
+            </button>
+        </form>
+    );
+};
+
 
 export default Contact;
