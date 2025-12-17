@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { company } from '../data/company';
 import './Contact.css';
 
 const Contact = () => {
@@ -16,15 +17,15 @@ const Contact = () => {
                         <div className="contact-methods">
                             <div className="method">
                                 <Phone className="method-icon" size={20} />
-                                <span>+91 98408 61611</span>
+                                <span>{company.contact.phone}</span>
                             </div>
                             <div className="method">
                                 <Mail className="method-icon" size={20} />
-                                <span>contact@snowcool.com</span>
+                                <span>{company.contact.email}</span>
                             </div>
                             <div className="method">
                                 <MapPin className="method-icon" size={20} />
-                                <span>Chennai, Tamil Nadu</span>
+                                <span>{company.contact.address}</span>
                             </div>
                         </div>
                     </div>

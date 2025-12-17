@@ -1,9 +1,9 @@
 export const content = {
     siteInfo: {
         name: "Snow Cool",
-        phone: "+91 98408 61611",
-        email: "customerservice@icyairconpvtltd.in",
-        address: "1/463, Sri Sai Nagar, 6th Cross Street, Thoraipakkam, Chennai - 600096"
+        phone: "044-43552394",
+        email: "snowcoolservice7@gmail.com",
+        address: "No, 70 Subash Nagar 4th street Puthagaram Kolathur Chennai - 600099"
     },
     pages: {
         about: {

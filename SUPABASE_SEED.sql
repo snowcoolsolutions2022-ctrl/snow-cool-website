@@ -2,9 +2,9 @@
 -- Copied from generate_seed.js output
 
 INSERT INTO public.site_config (key, value, label) VALUES ('name', 'Snow Cool', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
-INSERT INTO public.site_config (key, value, label) VALUES ('phone', '+91 98408 61611', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
-INSERT INTO public.site_config (key, value, label) VALUES ('email', 'customerservice@icyairconpvtltd.in', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
-INSERT INTO public.site_config (key, value, label) VALUES ('address', '1/463, Sri Sai Nagar, 6th Cross Street, Thoraipakkam, Chennai - 600096', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO public.site_config (key, value, label) VALUES ('phone', '044-43552394', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO public.site_config (key, value, label) VALUES ('email', 'snowcoolservice7@gmail.com', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
+INSERT INTO public.site_config (key, value, label) VALUES ('address', 'No, 70 Subash Nagar 4th street Puthagaram Kolathur Chennai - 600099', 'Site Info') ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
 
 INSERT INTO public.products (slug, title, description, full_content, image_url) VALUES ('ahu', 'Air Handling Unit (AHU)', 'Air Handling Unit (AHU) is a vital part of a heat, ventilation, and air-conditions system...', 'Air Handling Unit (AHU) is a vital part of a heat, ventilation, and air-conditions system and is used to condition and circulate air. We are professional ac amc service providers and are well experienced in Air Handling Unit (AHU) service and installation in Chennai.', NULL) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description;
 INSERT INTO public.products (slug, title, description, full_content, image_url) VALUES ('airbalancing', 'Airbalancing', 'Expert air balancing services to ensure optimal airflow and efficiency in your HVAC systems.', NULL, NULL) ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description;
