@@ -56,9 +56,12 @@ export const ContentProvider = ({ children }) => {
                         ...defaultCompany,
                         contact: {
                             ...defaultCompany.contact,
-                            phone: configMap.phone || defaultCompany.contact.phone,
-                            email: configMap.email || defaultCompany.contact.email,
-                            address: configMap.address || defaultCompany.contact.address
+                            // phone: configMap.phone || defaultCompany.contact.phone,
+                            // email: configMap.email || defaultCompany.contact.email,
+                            // address: configMap.address || defaultCompany.contact.address
+                            phone: defaultCompany.contact.phone,
+                            email: defaultCompany.contact.email,
+                            address: defaultCompany.contact.address
                         }
                     };
                     if (configMap.name) newData.company.name = configMap.name;
