@@ -1,10 +1,11 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { products } from '../data';
+import { useContent } from '../context/ContentContext';
 import { ArrowLeft, Check, Info } from 'lucide-react';
 
 const ProductDetail = () => {
     const { productId } = useParams();
+    const { products } = useContent();
     const product = products.find(p => p.id === productId);
 
     if (!product) {

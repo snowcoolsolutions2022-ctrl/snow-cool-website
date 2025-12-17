@@ -1,10 +1,11 @@
 import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { services } from '../data';
+import { useContent } from '../context/ContentContext';
 import { ArrowLeft, CheckCircle, Phone } from 'lucide-react';
 
 const ServiceDetail = () => {
     const { serviceId } = useParams();
+    const { services } = useContent();
     const service = services.find(s => s.id === serviceId);
 
     if (!service) {

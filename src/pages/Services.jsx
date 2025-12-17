@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { services } from '../data';
+import { useContent } from '../context/ContentContext';
 import { ArrowRight } from 'lucide-react';
 
 const Services = () => {
+    const { services } = useContent();
     return (
         <div className="py-20 bg-slate-50 min-h-screen">
             <div className="container mx-auto px-4">

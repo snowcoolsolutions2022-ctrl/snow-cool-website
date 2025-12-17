@@ -1,18 +1,21 @@
 import React from 'react';
 import { Award, Users, ThumbsUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { content } from '../data/content'; // Importing old content for text reuse if needed, or better use hardcoded refined text
+import { useContent } from '../context/ContentContext';
+import ReactMarkdown from 'react-markdown';
 
-// Hardcoding refined content based on original
 const About = () => {
+    const { pages } = useContent();
+    const { about } = pages || {};
+
     return (
         <div className="bg-slate-50 min-h-screen pb-20">
             {/* Hero */}
             <div className="bg-slate-900 text-white py-24 relative overflow-hidden">
                 <div className="container mx-auto px-4 relative z-10 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">About Snow Cool</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{about?.title || "About Snow Cool"}</h1>
                     <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-                        25+ Years of Experience in Air Conditioning Services. Established in 2013, we are Chennai's trusted authorized dealers for Voltas and Blue Star.
+                        {about?.subtitle || "25+ Years of Experience in Air Conditioning Services. Established in 2013, we are Chennai's trusted authorized dealers for Voltas and Blue Star."}
                     </p>
                 </div>
             </div>
@@ -22,16 +25,22 @@ const About = () => {
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
                             <h2 className="text-3xl font-bold mb-6 text-slate-900">Our Story</h2>
-                            <div className="space-y-4 text-slate-600 leading-relaxed text-lg">
-                                <p>
-                                    ICY Private Limited established Snow Cool in 2013 at Chennai. We proudly convey that we are the Authorized Dealers in VOLTAS & BLUE STAR (air conditioners & PEPSI coolers).
-                                </p>
-                                <p>
-                                    We run our business with dedicated, enthusiastic & qualified engineers focusing on work strategy in Air Conditioning and Refrigeration with pleasant feedback of experience and achievements.
-                                </p>
-                                <p>
-                                    Under gifted guidance, the Company has evolved to step forward as the leading Sales and Service Dealers of all major national & multinational brands of air-conditioning systems in Chennai.
-                                </p>
+                            <div className="space-y-4 text-slate-600 leading-relaxed text-lg prose prose-lg">
+                                {about?.content ? (
+                                    <ReactMarkdown>{about.content}</ReactMarkdown>
+                                ) : (
+                                    <>
+                                        <p>
+                                            ICY Private Limited established Snow Cool in 2013 at Chennai. We proudly convey that we are the Authorized Dealers in VOLTAS & BLUE STAR (air conditioners & PEPSI coolers).
+                                        </p>
+                                        <p>
+                                            We run our business with dedicated, enthusiastic & qualified engineers focusing on work strategy in Air Conditioning and Refrigeration with pleasant feedback of experience and achievements.
+                                        </p>
+                                        <p>
+                                            Under gifted guidance, the Company has evolved to step forward as the leading Sales and Service Dealers of all major national & multinational brands of air-conditioning systems in Chennai.
+                                        </p>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="relative">

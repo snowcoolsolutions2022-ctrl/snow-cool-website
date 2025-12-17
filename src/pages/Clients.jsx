@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Building, Users, Star } from 'lucide-react';
 
+import { useContent } from '../context/ContentContext';
+
 const Clients = () => {
+    const { pages } = useContent();
+    const { clients } = pages || {};
+
     // Placeholder list since we don't have logos yet
     const clientCategories = [
         { title: "Residential", desc: "Serving 1000+ homes across Chennai", icon: Users },
@@ -16,9 +21,9 @@ const Clients = () => {
         <div className="bg-slate-50 min-h-screen pb-20">
             <div className="bg-slate-900 text-white py-20">
                 <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Valued Clients</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">{clients?.title || "Our Valued Clients"}</h1>
                     <p className="text-xl text-slate-300 max-w-2xl mx-auto">
-                        We are proud to serve a diverse range of clients across residential, commercial, and industrial sectors.
+                        {clients?.subtitle || clients?.content || "We are proud to serve a diverse range of clients across residential, commercial, and industrial sectors."}
                     </p>
                 </div>
             </div>

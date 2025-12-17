@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { products } from '../data';
+import { useContent } from '../context/ContentContext';
 
 const Products = () => {
+    const { products } = useContent();
     return (
         <div className="py-20 container mx-auto px-4">
             <h1 className="text-4xl font-bold mb-12 text-center">Our Products</h1>

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle, Shield } from 'lucide-react';
-import { company, services } from '../data';
+import { useContent } from '../context/ContentContext';
 import technicianImage from '../assets/ac_technician.png';
 
 const Home = () => {
+    const { company, services, home } = useContent();
+    const { hero, whoWeAre, pricing, whyChooseUs } = home || {};
+
     return (
         <div className="space-y-20 pb-20">
             {/* Hero Section */}
@@ -13,10 +16,10 @@ const Home = () => {
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-3xl">
                         <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                            Expert Cooling Solutions for Your <span className="text-primary-500">Home & Business</span>
+                            {hero?.title || "Expert Cooling Solutions for Your Home & Business"}
                         </h1>
                         <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl">
-                            From installation to annual maintenance, Snow Cool provides trusted air conditioning services with over 25 years of expertise.
+                            {hero?.subtitle || "From installation to annual maintenance, Snow Cool provides trusted air conditioning services with over 25 years of expertise."}
                         </p>
                         <div className="flex gap-4">
                             <Link to="/contact" className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg font-semibold transition flex items-center gap-2">
@@ -62,38 +65,35 @@ const Home = () => {
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h2 className="text-3xl font-bold mb-6">Why Choose Snow Cool?</h2>
+                            <h2 className="text-3xl font-bold mb-6">{whyChooseUs?.title || "Why Choose Snow Cool?"}</h2>
                             <p className="text-slate-600 mb-8 leading-relaxed">
-                                At Snow Cool, we specialize in comprehensive AC Annual Maintenance Contracts designed to ensure your cooling systems run smoothly all year long. Our expert technicians deliver regular servicing, timely inspections, and quick repairs.
+                                {whyChooseUs?.desc || "At Snow Cool, we specialize in comprehensive AC Annual Maintenance Contracts designed to ensure your cooling systems run smoothly all year long. Our expert technicians deliver regular servicing, timely inspections, and quick repairs."}
                             </p>
                             <div className="space-y-6">
-                                <div className="flex gap-4">
-                                    <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-100 h-12 w-12 flex items-center justify-center text-primary-600">
-                                        <CheckCircle size={24} />
+                                {whyChooseUs?.features?.map((feature, idx) => (
+                                    <div key={idx} className="flex gap-4">
+                                        <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-100 h-12 w-12 flex items-center justify-center text-primary-600">
+                                            {idx % 2 === 0 ? <CheckCircle size={24} /> : <Shield size={24} />}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-lg">{feature.title}</h4>
+                                            <p className="text-slate-600">{feature.desc}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold text-lg">Expert Technicians</h4>
-                                        <p className="text-slate-600">Certified professionals for skilled maintenance.</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4">
-                                    <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-100 h-12 w-12 flex items-center justify-center text-primary-600">
-                                        <Shield size={24} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-lg">Cost-Effective Plans</h4>
-                                        <p className="text-slate-600">Tailored AMC packages that fit your budget.</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4">
-                                    <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-100 h-12 w-12 flex items-center justify-center text-primary-600">
-                                        <CheckCircle size={24} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold text-lg">24/7 Support</h4>
-                                        <p className="text-slate-600">Round-the-clock assistance and quick response.</p>
-                                    </div>
-                                </div>
+                                )) || (
+                                        <>
+                                            {/* Fallback Static if array missing */}
+                                            <div className="flex gap-4">
+                                                <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-100 h-12 w-12 flex items-center justify-center text-primary-600">
+                                                    <CheckCircle size={24} />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-lg">Expert Technicians</h4>
+                                                    <p className="text-slate-600">Certified professionals for skilled maintenance.</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                             </div>
                         </div>
                         <div className="relative">

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
-import { company, navigation, services } from '../../data';
+import { useContent } from '../../context/ContentContext';
 
 const Footer = () => {
+    const { company, navigation, services } = useContent();
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
             <div className="container mx-auto px-4">

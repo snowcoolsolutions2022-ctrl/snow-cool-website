@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Mail, ChevronDown } from 'lucide-react';
-import { navigation, company } from '../../data';
+import { useContent } from '../../context/ContentContext';
 
 const Header = () => {
+    const { navigation, company } = useContent();
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
 

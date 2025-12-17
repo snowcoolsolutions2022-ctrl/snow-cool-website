@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { User, Bot } from 'lucide-react';
 
 const ChatMessage = ({ message, isUser, timestamp }) => {
@@ -13,7 +14,7 @@ const ChatMessage = ({ message, isUser, timestamp }) => {
             </div>
             <div className="message-content">
                 <div className={`message-bubble ${isUser ? 'user-bubble' : 'ai-bubble'}`}>
-                    {message}
+                    <ReactMarkdown>{message}</ReactMarkdown>
                 </div>
                 {timestamp && (
                     <div className="message-timestamp">

@@ -5,11 +5,14 @@ import './index.css'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+import { ContentProvider } from './context/ContentContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
+    <ContentProvider>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </ContentProvider>
   </StrictMode>,
 )

@@ -29,13 +29,21 @@ export const sendMessage = async (messages) => {
             body: JSON.stringify({ messages: fullMessages })
         });
 
-        // Check if request was successful
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to get response');
+        const responseText = await response.text();
+        let data;
+
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            console.error('Failed to parse JSON response:', responseText);
+            throw new Error(`Server error: ${responseText.substring(0, 100)}...`);
         }
 
-        const data = await response.json();
+        // Check if request was successful
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to get response');
+        }
+
         return data.message;
 
     } catch (error) {

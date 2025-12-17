@@ -1,8 +1,9 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
-import { company } from '../data/company';
+import { useContent } from '../context/ContentContext';
 
 const Contact = () => {
+    const { company } = useContent();
     return (
         <div className="bg-slate-50 min-h-screen pb-20">
             <div className="bg-slate-900 text-white py-20">
