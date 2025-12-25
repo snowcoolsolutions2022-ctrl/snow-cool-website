@@ -4,7 +4,7 @@ export const services = [
         title: "A/C Installation",
         shortDesc: "Professional installation for residential and commercial units.",
         fullDesc: "We offer high-quality installation of residential and commercial air conditioning systems with the use of professional equipment and fine materials, all at a cost-effective price. Our installation process guarantees optimal performance and energy efficiency from day one.",
-        icon: "Wrench" // We will map this to Lucide icons later
+        icon: "Wrench"
     },
     {
         id: "maintenance",
@@ -34,12 +34,5 @@ export const services = [
         fullDesc: "Our AMC services ensure your AC units run smoothly year-round. We offer Labour, Ordinary, and Comprehensive contracts tailored to your specific needs, verifying temperature, amperage, noise, and more.",
         icon: "ShieldCheck",
         isFeatured: true
-    },
-    {
-        id: "om",
-        title: "Operation & Maintenance (O&M)",
-        shortDesc: "Specialized O&M for commercial and industrial facilities.",
-        fullDesc: "We specialized in O&M for Mechanical, Electrical, BMS, and HVAC systems. We deploy trained technicians for commercial malls, IT parks, and industrial units.",
-        icon: "Briefcase"
     }
 ];

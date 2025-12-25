@@ -5,12 +5,53 @@
     right: 0;
     z-index: 1000;
     transition: all 0.3s ease;
-    background: transparent;
-    padding: 1.5rem 0;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.top-bar {
+    background-color: #0f172a;
+    /* Dark blue/black specific to the design */
+    color: white;
+    padding: 8px 0;
+    font-size: 0.9rem;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar-contact {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.top-contact-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.top-contact-link:hover {
+    opacity: 0.9;
+}
+
+.header-content {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .header.scrolled {
     background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     padding: 1rem 0;
     box-shadow: var(--shadow-sm);

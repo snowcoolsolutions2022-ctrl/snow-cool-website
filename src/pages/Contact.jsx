@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
     const { company } = useContent();
@@ -85,10 +86,9 @@ const ContactForm = () => {
         setErrorMsg('');
 
         try {
-            // Import dynamically to avoid top-level issues if env vars are missing during build/dev
+            // 1. Save to Supabase
             const { supabase } = await import('../lib/supabaseClient');
-
-            const { error } = await supabase
+            const { error: dbError } = await supabase
                 .from('messages')
                 .insert([
                     {
@@ -100,14 +100,46 @@ const ContactForm = () => {
                     }
                 ]);
 
-            if (error) throw error;
+            if (dbError) {
+                console.error('Database Error:', dbError);
+                throw new Error('Failed to save message to database.');
+            }
 
-            setStatus('success');
-            setFormData({ name: '', phone: '', email: '', service: 'General Service', message: '' });
+            // 2. Send Email via EmailJS
+            try {
+                const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+                const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+                const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+                if (!serviceId || !templateId || !publicKey) {
+                    throw new Error('EmailJS configuration missing in environment variables.');
+                }
+
+                await emailjs.send(
+                    serviceId,
+                    templateId,
+                    {
+                        user_name: formData.name,
+                        user_email: formData.email,
+                        user_phone: formData.phone,
+                        user_service: formData.service,
+                        user_message: formData.message,
+                        to_email: 'snowcoolservice7@gmail.com'
+                    },
+                    publicKey
+                );
+
+                setStatus('success');
+                setFormData({ name: '', phone: '', email: '', service: 'General Service', message: '' });
+            } catch (emailErr) {
+                console.error('EmailJS Error:', emailErr);
+                setStatus('error');
+                setErrorMsg(`Message saved, but email failed to send: ${emailErr.message || 'Please contact us directly.'}`);
+            }
         } catch (err) {
-            console.error('Error submitting form:', err);
+            console.error('Submission Error:', err);
             setStatus('error');
-            setErrorMsg('Failed to send message. Please try again or call us directly.');
+            setErrorMsg(err.message || 'Failed to send message. Please try again or call us directly.');
         }
     };
 

@@ -170,6 +170,21 @@ const AIChatbot = () => {
                             />
                         ))}
 
+                        {/* Quick Suggestions (only show initially) */}
+                        {messages.length === 1 && !isLoading && (
+                            <div className="quick-suggestions">
+                                {quickSuggestions.map((suggestion, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => handleQuickSuggestion(suggestion)}
+                                        className="quick-suggestion-button"
+                                    >
+                                        {suggestion}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
                         {/* Loading indicator */}
                         {isLoading && (
                             <div className="chat-message ai-message">
@@ -188,21 +203,6 @@ const AIChatbot = () => {
 
                         <div ref={messagesEndRef} />
                     </div>
-
-                    {/* Quick Suggestions (only show initially) */}
-                    {messages.length === 1 && !isLoading && (
-                        <div className="quick-suggestions">
-                            {quickSuggestions.map((suggestion, idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => handleQuickSuggestion(suggestion)}
-                                    className="quick-suggestion-button"
-                                >
-                                    {suggestion}
-                                </button>
-                            ))}
-                        </div>
-                    )}
 
                     {/* Error Display */}
                     {error && (

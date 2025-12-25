@@ -25,6 +25,23 @@ const Header = () => {
 
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+      {/* Top Bar */}
+      <div className="top-bar">
+        <div className="container top-bar-content">
+          <span className="top-bar-motto">Trusted Care for Your Cooling Comfort</span>
+          <div className="top-bar-contact">
+            <a href={`tel:${content.siteInfo.phone.replace(/\s+/g, '')}`} className="top-contact-link">
+              <Phone size={14} />
+              <span>{content.siteInfo.phone}</span>
+            </a>
+            <a href={`mailto:${content.siteInfo.email}`} className="top-contact-link">
+              {/* Using a mail icon or just text if preferred, logic similar to phone */}
+              <span>{content.siteInfo.email}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="container header-content">
         <Link to="/" className="logo">
           <Snowflake className="logo-icon" size={28} />
@@ -71,11 +88,15 @@ const Header = () => {
         </nav>
 
         <div className="header-actions">
-          <a href={`tel:${content.siteInfo.phone.replace(/\s+/g, '')}`} className="contact-link">
-            <Phone size={18} />
-            <span>{content.siteInfo.phone}</span>
-          </a>
-          <button className="btn btn-primary book-btn">Book Service</button>
+          {/* Phone is now in top bar, keeping just the btn or checking if live site has both. 
+               The image shows top bar has phone/email. The nav bar just has links. 
+               Reference image 1: Nav bar has "Home About ... Contact". 
+               Wait, the reference image shows "Contact" as a nav item, AND "Book Service" might not be there?
+               Let's check the reference image 1 again. 
+               It shows: Logo Left. Nav Right (Home, About Us, Services v, Products v, Clients, Contact).
+               NO "Book Service" button in the nav bar in the reference image.
+               AND contact info is in the black bar above.
+           */}
 
           <button
             className="mobile-menu-btn"

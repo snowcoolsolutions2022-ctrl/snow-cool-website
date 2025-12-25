@@ -71,6 +71,85 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// Contact Email Endpoint
+app.post('/api/contact', async (req, res) => {
+    try {
+        const { name, email, phone, service, message } = req.body;
+
+        // Verify environment variables
+        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+            console.error('Email credentials missing in .env');
+            return res.status(500).json({ error: 'Server configuration error: Email credentials missing.' });
+        }
+
+        // Dynamically import nodemailer to avoid startup errors if not installed yet
+        const nodemailer = await import('nodemailer');
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        // 1. Email to Company
+        const mailOptionsCompany = {
+            from: `"${name}" <${email}>`, // Shows sender's name
+            to: process.env.EMAIL_USER,    // Send to company email
+            subject: `New Contact Inquiry: ${service}`,
+            text: `
+New Contact Form Submission:
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Service: ${service}
+
+Message:
+${message}
+            `,
+            html: `
+<h3>New Contact Inquiry</h3>
+<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Phone:</strong> ${phone}</p>
+<p><strong>Service:</strong> ${service}</p>
+<br/>
+<p><strong>Message:</strong></p>
+<p>${message.replace(/\n/g, '<br>')}</p>
+            `
+        };
+
+        // 2. Auto-reply to Customer
+        const mailOptionsCustomer = {
+            from: `"Snow Cool Service" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "We received your message - Snow Cool",
+            text: `Hi ${name},\n\nThank you for contacting Snow Cool. We have received your inquiry regarding ${service}.\n\nOur team will review your message and get back to you within 24 hours.\n\nBest regards,\nSnow Cool Team\n${process.env.EMAIL_USER}`,
+            html: `
+<h3>Thank you for contacting Snow Cool!</h3>
+<p>Hi ${name},</p>
+<p>We have received your inquiry regarding <strong>${service}</strong>.</p>
+<p>Our team will review your message and get back to you within 24 hours.</p>
+<br/>
+<p>Best regards,</p>
+<p><strong>Snow Cool Team</strong></p>
+            `
+        };
+
+        // Send both emails
+        await transporter.sendMail(mailOptionsCompany);
+        await transporter.sendMail(mailOptionsCustomer);
+
+        res.json({ success: true, message: 'Emails sent successfully' });
+
+    } catch (error) {
+        console.error('Email Error:', error);
+        res.status(500).json({ error: 'Failed to send email' });
+    }
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`🚀 Backend server running on http://localhost:${PORT}`);

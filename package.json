@@ -12,12 +12,14 @@
     "dev:all": "npm run server & npm run dev"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@supabase/supabase-js": "^2.87.1",
     "@tailwindcss/postcss": "^4.1.18",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "lucide-react": "^0.560.0",
+    "nodemailer": "^7.0.11",
     "openai": "^6.10.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

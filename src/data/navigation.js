@@ -7,16 +7,16 @@ export const navigation = [
         dropdown: [
             { title: "Installation", path: "/services/installation" },
             { title: "Maintenance", path: "/services/maintenance" },
-            { title: "AMC Plans", path: "/amc" },
-            { title: "O & M", path: "/om" }
+            { title: "AMC Plans", path: "/amc" }
         ]
     },
     {
         title: "Products",
         path: "/products",
         dropdown: [
-            { title: "VRF Systems", path: "/products/vrf" },
-            { title: "Cassette AC", path: "/products/cassette-ac" },
+            { title: "Window AC", path: "/products/window-ac" },
+            { title: "Hi-Wall Split AC", path: "/products/split-ac" },
+            { title: "Hi-Wall Split Inverter AC", path: "/products/split-inverter-ac" },
             { title: "All Products", path: "/products" }
         ]
     },

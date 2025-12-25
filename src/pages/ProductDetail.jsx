@@ -20,12 +20,16 @@ const ProductDetail = () => {
                 </Link>
 
                 <div className="grid md:grid-cols-2 gap-12 bg-white rounded-2xl shadow-xl overflow-hidden">
-                    {/* Image Placeholder */}
-                    <div className="bg-slate-200 min-h-[400px] flex items-center justify-center text-slate-400 p-8">
-                        <div className="text-center">
-                            <Info size={64} className="mx-auto mb-4 opacity-50" />
-                            <p>Product Image Preview</p>
-                        </div>
+                    {/* Image Section */}
+                    <div className="bg-slate-100 overflow-hidden flex items-center justify-center p-4">
+                        {product.image ? (
+                            <img src={product.image} alt={product.title} className="max-w-full max-h-[500px] object-contain rounded-lg shadow-md" />
+                        ) : (
+                            <div className="text-center text-slate-400 py-20">
+                                <Info size={64} className="mx-auto mb-4 opacity-50" />
+                                <p>Product Image Preview</p>
+                            </div>
+                        )}
                     </div>
 
                     <div className="p-8 md:p-12 flex flex-col justify-center">

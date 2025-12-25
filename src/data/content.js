@@ -38,38 +38,6 @@ Annual Maintenance Contract for Package and Central AC plants. Any machine needs
 - **Free Spares**: Supply of spares & materials will be done free of cost (only on receipt of defective spares), if required for the unit, as a result of wear and tear during the contract period.
 - **Free Chemical Washing**: During Overhauling of the Air Conditioners, this chemical washing process will be done free of charges.`
         },
-        om: {
-            title: "Operation And Maintenance",
-            subtitle: "Specialized O & M Contractor",
-            content: `### We are specialized O & M contractor For
-
-**Hard Services**
-- Mechanical And Electrical Maintenance
-- BMS Operation
-- Plant Maintenance
-- HVAC (Operation & Maintenance)
-- Plumbing & Water Management
-
-**Soft Services**
-- Housekeeping
-- Janitorial Services
-- Garden And Lawn Maintenance
-
-**We are equipped to deploy trained**
-- Technicians – Air conditioning
-- Electrical with B License
-- DG Technicians and WTP Technicians
-- Engineers and Office staffs
-
-**Undertake O & M works for**
-- Commercial Malls
-- Cineplex Office Building
-- IT Parks
-- Hospitals and Auditoriums Factories
-- Process Cooling and Industrial Units
-
-All staffs deployed will be covered with statutory requirements like ESIC, PF.`
-        },
         clients: {
             title: "Our Clients",
             subtitle: "Our Valuable Customers",
@@ -80,41 +48,25 @@ All staffs deployed will be covered with statutory requirements like ESIC, PF.`
         { title: "Home", path: "/" },
         { title: "About Us", path: "/about" },
         {
-            title: "Products Serviced",
-            path: "/products",
-            dropdown: [
-                { title: "Air Handling Unit (AHU)", path: "/products/ahu" },
-                { title: "Airbalancing", path: "/products/airbalancing" },
-                { title: "Cassette Type AC", path: "/products/cassette-ac" },
-                { title: "Chiller Service", path: "/products/chiller" },
-                { title: "Cold Storage Service", path: "/products/cold-storage" },
-                { title: "Ductable AC", path: "/products/ductable" },
-                { title: "Ducting Work", path: "/products/ducting" },
-                { title: "Floor Mounted Package AC", path: "/products/floor-mounted" },
-                { title: "Floor Standing AC", path: "/products/floor-standing" },
-                { title: "Hi-Wall Split AC", path: "/products/split-ac" },
-                { title: "Hot Insulation Materials", path: "/products/insulation" },
-                { title: "Roof Top AC", path: "/products/rooftop" },
-                { title: "VRF System", path: "/products/vrf" },
-                { title: "Window AC", path: "/products/window-ac" }
-            ]
-        },
-        {
             title: "Services",
             path: "/services",
             dropdown: [
-                { title: "A/C Installation", path: "/services/installation" },
-                { title: "Annual Inspections", path: "/services/inspections" },
-                { title: "Duct Cleaning", path: "/services/duct-cleaning" },
-                { title: "Heating Services", path: "/services/heating" },
-                { title: "Maintenance and Repair", path: "/services/maintenance" },
-                { title: "Pre-season Preparation", path: "/services/pre-season" },
-                { title: "Windows Units", path: "/services/windows-units" }
+                { title: "Installation", path: "/services/installation" },
+                { title: "Maintenance", path: "/services/maintenance" },
+                { title: "AMC Plans", path: "/amc" }
             ]
         },
-        { title: "Our Clients", path: "/clients" },
-        { title: "AMC", path: "/amc" },
-        { title: "O & M", path: "/om" },
+        {
+            title: "Products",
+            path: "/products",
+            dropdown: [
+                { title: "Window AC", path: "/products/window-ac" },
+                { title: "Hi-Wall Split AC", path: "/products/split-ac" },
+                { title: "Hi-Wall Split Inverter AC", path: "/products/split-inverter-ac" },
+                { title: "All Products", path: "/products" }
+            ]
+        },
+        { title: "Clients", path: "/clients" },
         { title: "Contact", path: "/contact" }
     ],
     home: {
@@ -143,20 +95,9 @@ All staffs deployed will be covered with statutory requirements like ESIC, PF.`
         }
     },
     products: [
-        { id: "ahu", title: "Air Handling Unit (AHU)", description: "Air Handling Unit (AHU) is a vital part of a heat, ventilation, and air-conditions system...", fullContent: "Air Handling Unit (AHU) is a vital part of a heat, ventilation, and air-conditions system and is used to condition and circulate air. We are professional ac amc service providers and are well experienced in Air Handling Unit (AHU) service and installation in Chennai." },
-        { id: "airbalancing", title: "Airbalancing", description: "Expert air balancing services to ensure optimal airflow and efficiency in your HVAC systems." },
-        { id: "cassette-ac", title: "Cassette Type AC", description: "Installation and service of cassette type air conditioners for efficient cooling." },
-        { id: "chiller", title: "Chiller Service", description: "Comprehensive chiller maintenance and repair services." },
-        { id: "cold-storage", title: "Cold Storage Service", description: "Specialized service for cold storage units to maintain precise temperatures." },
-        { id: "ductable", title: "Ductable AC", description: "Service for ductable AC units ensuring even cooling throughout your space." },
-        { id: "ducting", title: "Ducting Work", description: "Professional ducting installation and repair." },
-        { id: "floor-mounted", title: "Floor Mounted Package AC", description: "Servicing floor mounted package ACs for large spaces." },
-        { id: "floor-standing", title: "Floor Standing AC", description: "Maintenance for floor standing air conditioning units." },
-        { id: "split-ac", title: "Hi-Wall Split AC", description: "Expert service for hi-wall split ACs in homes and offices." },
-        { id: "insulation", title: "Hot Insulation Materials", description: "Provision and installation of quality insulation materials." },
-        { id: "rooftop", title: "Roof Top AC", description: "Service for rooftop AC units for commercial buildings." },
-        { id: "vrf", title: "VRF System", description: "Advanced VRF system installation and maintenance." },
-        { id: "window-ac", title: "Window AC", description: "Repair and service for traditional window AC units." }
+        { id: "window-ac", title: "Window AC", description: "Repair and service for traditional window AC units.", fullContent: "We provide comprehensive service, repair and installation for all brands of window air conditioners. Our experts ensure your window unit works at maximum efficiency." },
+        { id: "split-ac", title: "Hi-Wall Split AC", description: "Expert service for hi-wall split ACs in homes and offices.", fullContent: "Hi-wall split systems are the most popular cooling solution. We offer professional installation, deep cleaning service and repair for all major split AC brands." },
+        { id: "split-inverter-ac", title: "Hi-Wall Split Inverter AC", description: "Energy efficient cooling with advanced inverter technology.", fullContent: "Inverter ACs provide superior energy savings and precise temperature control. We specialize in the complex electronic components and refrigerant systems of modern inverter units." }
     ],
     services: [
         { id: "installation", title: "A/C Installation", description: "We offer high quality installation of residential and commercial air conditioning...", fullContent: "We offer high quality installation of residential and commercial air conditioning with the use of professional equipment and fine materials, at a lower cost." },

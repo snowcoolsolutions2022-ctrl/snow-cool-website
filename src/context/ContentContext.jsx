@@ -68,7 +68,8 @@ export const ContentProvider = ({ children }) => {
                     // Add other top level keys if any
                 }
 
-                // 2. Products
+                // 2. Products - DISABLED to force local file usage
+                /*
                 if (products && products.length > 0) {
                     newData.products = products.map(p => ({
                         id: p.slug,
@@ -77,8 +78,10 @@ export const ContentProvider = ({ children }) => {
                         fullContent: p.full_content
                     }));
                 }
+                */
 
-                // 3. Services
+                // 3. Services - DISABLED to force local file usage
+                /*
                 if (services && services.length > 0) {
                     newData.services = services.map(s => ({
                         id: s.slug,
@@ -88,6 +91,7 @@ export const ContentProvider = ({ children }) => {
                         shortDesc: s.description // mapping for UI compatibility
                     }));
                 }
+                */
 
                 // 4. Pages
                 if (pages && pages.length > 0) {
@@ -106,7 +110,8 @@ export const ContentProvider = ({ children }) => {
                     newData.pages = { ...newData.pages, ...pageMap };
                 }
 
-                // 5. Navigation
+                // 5. Navigation - DISABLED to force local file usage (removes 'Product serviced' tab)
+                /* 
                 if (navigation && navigation.length > 0) {
                     const buildMenu = (parentId = null) => {
                         return navigation
@@ -121,6 +126,7 @@ export const ContentProvider = ({ children }) => {
                     const builtMenu = buildMenu(null);
                     if (builtMenu.length > 0) newData.navigation = builtMenu;
                 }
+                */
 
                 setData(newData);
             } catch (err) {
