@@ -31,13 +31,44 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 async function checkConnection() {
     try {
-        const { data, error } = await supabase.auth.getSession();
-        if (error) {
-            console.error('❌ Connection failed:', error.message);
+        console.log('Testing general connection...');
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+            console.error('❌ Auth check failed:', sessionError.message);
         } else {
             console.log('✅ Supabase connection successful! Auth service is reachable.');
             console.log('Supabase URL:', supabaseUrl);
         }
+
+        console.log("\nChecking 'messages' table...");
+        const { data: tableData, error: tableError } = await supabase.from('messages').select('id').limit(1);
+
+        if (tableError) {
+            console.error("❌ Error accessing 'messages' table:", tableError.message);
+            if (tableError.code === '42P01') {
+                console.log("👉 Result: Table 'messages' DOES NOT exist in the database.");
+            } else if (tableError.code === '42501') {
+                console.log("👉 Result: Permission denied (RLS is active, which is normal for SELECT).");
+            }
+        } else {
+            console.log("✅ Table 'messages' exists and is accessible.");
+        }
+
+        console.log("\nTesting public Insert permission...");
+        // Mock insert (won't actually insert if RLS is wrong, will return error)
+        const { error: insertError } = await supabase.from('messages').insert([
+            { name: 'Connection Test', email: 'test@example.com', message: 'Testing RLS', phone: '000' }
+        ]).select();
+
+        if (insertError) {
+            console.error("❌ Public Insert failed:", insertError.message);
+            console.log("👉 Check if RLS policy 'Allow public inserts' is enabled on 'messages' table.");
+        } else {
+            console.log("✅ Public Insert successful! Contact form should work.");
+            // Clean up test message if it was actually inserted
+            await supabase.from('messages').delete().eq('name', 'Connection Test');
+        }
+
     } catch (err) {
         console.error('❌ Unexpected error:', err);
     }

@@ -85,36 +85,50 @@ const ContactForm = () => {
         setStatus('loading');
         setErrorMsg('');
 
+        let dbSaved = false;
+        let emailSent = false;
+        let errors = [];
+
+        // 1. Try to save to Supabase
         try {
-            // 1. Save to Supabase
             const { supabase } = await import('../lib/supabaseClient');
-            const { error: dbError } = await supabase
-                .from('messages')
-                .insert([
-                    {
-                        name: formData.name,
-                        phone: formData.phone,
-                        email: formData.email,
-                        service_type: formData.service,
-                        message: formData.message
-                    }
-                ]);
+            if (supabase) {
+                const { error: dbError } = await supabase
+                    .from('messages')
+                    .insert([
+                        {
+                            name: formData.name,
+                            phone: formData.phone,
+                            email: formData.email,
+                            service_type: formData.service,
+                            message: formData.message
+                        }
+                    ]);
 
-            if (dbError) {
-                console.error('Database Error:', dbError);
-                throw new Error('Failed to save message to database.');
-            }
-
-            // 2. Send Email via EmailJS
-            try {
-                const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-                const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-                const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-                if (!serviceId || !templateId || !publicKey) {
-                    throw new Error('EmailJS configuration missing in environment variables.');
+                if (dbError) {
+                    console.error('Database Error:', dbError);
+                    errors.push(`Database Error: ${dbError.message || 'Could not save to database'}`);
+                } else {
+                    dbSaved = true;
                 }
+            } else {
+                errors.push('Supabase client not initialized.');
+            }
+        } catch (dbErr) {
+            console.error('Supabase Import/Execution Error:', dbErr);
+            errors.push(`Database Connection Error: ${dbErr.message}`);
+        }
 
+        // 2. Try to send Email via EmailJS
+        try {
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+            if (!serviceId || !templateId || !publicKey) {
+                console.warn('EmailJS configuration missing in environment variables.');
+                errors.push('Email notification configuration missing.');
+            } else {
                 await emailjs.send(
                     serviceId,
                     templateId,
@@ -128,18 +142,32 @@ const ContactForm = () => {
                     },
                     publicKey
                 );
-
-                setStatus('success');
-                setFormData({ name: '', phone: '', email: '', service: 'General Service', message: '' });
-            } catch (emailErr) {
-                console.error('EmailJS Error:', emailErr);
-                setStatus('error');
-                setErrorMsg(`Message saved, but email failed to send: ${emailErr.message || 'Please contact us directly.'}`);
+                emailSent = true;
             }
-        } catch (err) {
-            console.error('Submission Error:', err);
+        } catch (emailErr) {
+            console.error('EmailJS Error:', emailErr);
+            errors.push(`Email Notification Error: ${emailErr.message || 'Failed to send email'}`);
+        }
+
+        // 3. Determine final status
+        if (dbSaved || emailSent) {
+            setStatus('success');
+            setFormData({ name: '', phone: '', email: '', service: 'General Service', message: '' });
+
+            if (!dbSaved || !emailSent) {
+                // Partial success
+                const partialMsg = !dbSaved && !emailSent
+                    ? 'Both database and email failed. Please call us.'
+                    : !dbSaved
+                        ? 'Message sent via email, but failed to save to database record.'
+                        : 'Message saved to database, but notification email failed.';
+                console.warn('Partial success/failure:', partialMsg);
+                // We show success anyway because at least one path worked, 
+                // but we could set an info message if needed.
+            }
+        } else {
             setStatus('error');
-            setErrorMsg(err.message || 'Failed to send message. Please try again or call us directly.');
+            setErrorMsg(errors.length > 0 ? errors.join(' | ') : 'Failed to process your request. Please call us directly.');
         }
     };
 
